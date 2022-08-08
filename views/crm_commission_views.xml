@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--    crm commission form view    -->
+
+        <record id="view_crm_commission_form" model="ir.ui.view">
+            <field name="name">crm.commission.form</field>
+            <field name="model">crm.commission</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <h1>
+                                    <field name="name"/>
+                                </h1>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="active"/>
+                                <field name="from_date"/>
+                                <field name="to_date"/>
+                            </group>
+                            <group>
+                                <field name="type"/>
+                                <field name="commission_rate"
+                                       attrs="{'invisible': [('type','!=','revenue_straight')]}"
+                                       widget="percentage"/>
+                            </group>
+                            <field name="product_wise_ids"
+                                   mode="tree"
+                                   attrs="{'invisible': [('type','!=','product_wise')]}">
+                                <tree editable="top">
+                                    <field name="category_id"/>
+                                    <field name="product_id"/>
+                                    <field name="commission_rate"
+                                           widget="percentage"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="maximum_commission"
+                                           widget='monetary'
+                                           options="{'currency_field': 'currency_id'}"/>
+                                </tree>
+                            </field>
+                            <field name="revenue_wise_ids"
+                                   mode="tree"
+                                   attrs="{'invisible': [('type','!=','revenue_graduated')]}">
+                                <tree editable="top">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="minimum_amount"
+                                           widget='monetary'
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <field name="maximum_amount"
+                                           widget='monetary'
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <field name="commission_rate"
+                                           widget="percentage"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--    commissions plan tree view -->
+
+        <record model="ir.ui.view" id="view_crm_commission_tree">
+            <field name="name">crm.commission.tree</field>
+            <field name="model">crm.commission</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                    <field name="type"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--    crm commission action -->
+        <record id="action_crm_commission" model="ir.actions.act_window">
+            <field name="name">CRM Commissions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.commission</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>
