@@ -2,7 +2,7 @@
 <odoo>
     <!--     Top menu items-->
     <menuitem name="Commission Plan"
-              id="menu_commission_plan_root" sequence="0"/>
+              id="menu_commission_plan_root"/>
 
     <menuitem name="Commission"
               id="menu_crm_commission"
